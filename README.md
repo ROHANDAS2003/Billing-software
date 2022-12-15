@@ -1,4 +1,4 @@
-# Souce-codes/Billing software
+# Billing software
 
 It is a Billing software made in C language
 
