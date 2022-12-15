@@ -4,28 +4,28 @@
 #include <string.h>
 #include <conio.h>
 
-char FileName[50];
+char FileName[50]; // declare a global variable
 
-struct items
+struct items // structure of items purchased
 {
-    char item[20];
-    float price;
-    int qty;
+    char item[20]; // name of items purchased
+    float price;// price of one pice
+    int qty; // no. of quantity
 };
 
-struct order
+struct order // structure of every customer
 {
-    char customer[50];
-    char date[50];
-    int numOfItems;
-    struct items itm[50];
+    char customer[50]; // name of customer
+    char date[50]; // date of invoice
+    int numOfItems; // no. of items purchased
+    struct items itm[50]; // structure with every items detail
 };
 
-
+// saves invoice heaer in .txt file
 void SaveInvoiceHeader(char name[50], char date[30])
 {
     FILE *file;
-    file = fopen(FileName, "a");
+    file = fopen(FileName, "a"); // opened file in append mode
 
     fprintf(file, "\t    Company name   ");
     fprintf(file, "\n-----------------------------------------");
@@ -42,10 +42,11 @@ void SaveInvoiceHeader(char name[50], char date[30])
     fclose(file);
 }
 
+// saves invoice body in .txt file
 void SaveInvoiceBody(char item[30], int qty, float price)
 {
     FILE *file;
-    file = fopen(FileName, "a");
+    file = fopen(FileName, "a"); // opened file in append mode
 
     fprintf(file, "%s\t\t", item);
     fprintf(file, "%d\t\t",qty);
@@ -55,15 +56,16 @@ void SaveInvoiceBody(char item[30], int qty, float price)
     fclose(file);
 }
 
+// saves invoice footer in .txt file
 void SaveInvoiceFooter(float total, float cgst, float disc)
 {
     FILE *file;
-    file = fopen(FileName, "a");
+    file = fopen(FileName, "a"); // opened file in append mode
 
     fprintf(file, "\n");
 
     float discount = total*(disc/100), netTotal = total - discount, cal_cgst = netTotal*(cgst/100), grandTotal = netTotal + (2*cal_cgst);
-
+    // calculated discount, net total, cgst, grand total
     fprintf(file, "------------------------------------------\n");
     fprintf(file, "Sub Total\t\t\t%.2f", total);
     fprintf(file, "\nDiscount @%.f%s\t\t\t%.2f", disc, "%", discount);
@@ -78,6 +80,8 @@ void SaveInvoiceFooter(float total, float cgst, float disc)
     fclose(file);
 }
 
+
+// generate and show invoice header
 void GenerateBillHeader(char name[50], char date[30])
 {
     printf("\n\n");
@@ -94,6 +98,7 @@ void GenerateBillHeader(char name[50], char date[30])
     printf("\n");
 }
 
+// generate and show invoice body
 void GenarateBillBody(char item[30], int qty, float price)
 {
     printf("%s\t\t", item);
@@ -102,6 +107,7 @@ void GenarateBillBody(char item[30], int qty, float price)
     printf("\n");
 }
 
+// generate and show invoice footer
 void GenerateBillFooter(float total, float cgst, float disc)
 {
     printf("\n");
@@ -121,21 +127,23 @@ void GenerateBillFooter(float total, float cgst, float disc)
 
 }
 
+// function to find is a file exist or not
 bool file_exist(const char *filename)
 {
-    FILE *fp = fopen(filename, "r");
+    FILE *fp = fopen(filename, "r"); // opened a file in read mode
     bool is_exist = false;
     if (fp != NULL)
     {
         is_exist = true;
         fclose(fp);
     }
-    return is_exist;
+    return is_exist; // returns boolean alue file is exist or not
 }
 
+// function to create invoice and save it with customer name
 void Create()
 {   
-    system("CLS");
+    system("CLS");// clearing screen
     printf("\n\t\t======== Delete invoice ========\n\n");
     fflush(stdin);
 
@@ -206,9 +214,10 @@ void Create()
     getch();
 }
 
+// function to delete invoice with customer name
 void Delete()
 {
-    system("CLS");
+    system("CLS");// clearing screen
     printf("\n\t\t======== Delete invoice ========\n\n");
 
     char name[50];
@@ -230,9 +239,10 @@ void Delete()
     getch();
 }
 
+// invoice to search and show invoice with customer name
 void Search()
 {
-    system("CLS");
+    system("CLS");// clearing screen
     printf("\n\t\t======== Search invoice ========\n\n");
 
     char name[50];
@@ -267,6 +277,7 @@ void Search()
     getch();
 }
 
+// main function where the execution starts
 int main()
 {   
     bool Run = true;
@@ -274,7 +285,7 @@ int main()
 
     while (Run)
     {
-        system("CLS");
+        system("CLS"); // clearing screen
         printf("\n\t\t======== Welcome to Billing software ========\n\n");
         printf("Choose what you wanna do.");
         printf("\n 1. Create invoice.\n 2. Delete invoice. \n 3. Search invoice. \n 4. Exit software.\n\n Your input: ");
